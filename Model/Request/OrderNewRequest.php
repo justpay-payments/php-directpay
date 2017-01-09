@@ -1,0 +1,34 @@
+<?php
+
+namespace DigitalVirgo\DirectPay\Model\Request;
+
+use DigitalVirgo\DirectPay\Model\Order;
+
+class OrderNewRequest extends RequestAbstract
+{
+
+    /**
+     * @var Order
+     */
+    protected $_order;
+
+    /**
+     * @return Order
+     */
+    public function getOrder()
+    {
+        return $this->_order;
+    }
+
+    /**
+     * @param Order $order
+     * @return OrderNewRequest
+     */
+    public function setOrder($order)
+    {
+        $this->_order = $order;
+        return $this;
+    }
+
+
+}
