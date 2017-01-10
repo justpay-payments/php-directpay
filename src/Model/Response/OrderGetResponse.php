@@ -1,17 +1,17 @@
 <?php
 
-namespace DigitalVirgo\DirectPay\Model\Request;
+namespace DigitalVirgo\DirectPay\Model\Response;
 
 use DigitalVirgo\DirectPay\Model\Order;
 
 /**
- * Class OrderNewRequest
- * @package DigitalVirgo\DirectPay\Model\Request
+ * Class OrderGetResponse
+ * @package DigitalVirgo\DirectPay\Model\Response
  *
  * @author Adam Jurek <adam.jurek@digitalvirgo.pl>
  *
  */
-class OrderNewRequest extends RequestAbstract
+class OrderGetResponse extends ResponseAbstract
 {
 
     /**
@@ -29,7 +29,7 @@ class OrderNewRequest extends RequestAbstract
 
     /**
      * @param Order $order
-     * @return OrderNewRequest
+     * @return OrderGetResponse
      */
     public function setOrder($order)
     {
@@ -49,9 +49,10 @@ class OrderNewRequest extends RequestAbstract
         $parentMap = parent::_getDomMap()[0];
 
         return [
-            'OrderNewRequest' => array_merge($parentMap, [
-                'Order' => 'order'
+            'OrderGetResponse' => array_merge($parentMap, [
+                'Order' => 'order',
             ]),
         ];
     }
+
 }

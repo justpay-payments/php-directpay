@@ -2,6 +2,15 @@
 
 namespace DigitalVirgo\DirectPay\Model;
 
+use DigitalVirgo\DirectPay\Model\Enum\OrderStatus;
+
+/**
+ * Class Order
+ * @package DigitalVirgo\DirectPay\Model
+ *
+ * @author Adam Jurek <adam.jurek@digitalvirgo.pl>
+ *
+ */
 class Order extends ModelAbstract
 {
 
@@ -127,12 +136,15 @@ class Order extends ModelAbstract
     }
 
     /**
-     * @param string $orderStatus
-     * @return Order
+     * @param $orderStatus
+     * @return $this
+     * @throws \Exception
      */
     public function setOrderStatus($orderStatus)
     {
-        //@todo validate input
+        if ($orderStatus !== null && !in_array($orderStatus, OrderStatus::getAllOptions())) {
+            throw new \Exception('Invalid order status.');
+        }
 
         $this->_orderStatus = $orderStatus;
         return $this;
@@ -454,7 +466,10 @@ class Order extends ModelAbstract
         return $this;
     }
 
-    protected function getDomMap()
+    /**
+     * @return array xml DOM map
+     */
+    protected function _getDomMap()
     {
         return [
             'Order' => [

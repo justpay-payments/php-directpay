@@ -2,8 +2,20 @@
 
 namespace DigitalVirgo\DirectPay\Model;
 
+/**
+ * Class ModelAbstract
+ * @package DigitalVirgo\DirectPay\Model
+ *
+ * @author Adam Jurek <adam.jurek@digitalvirgo.pl>
+ *
+ * Abstract class for model providing xml serialization/deserialization
+ */
 abstract class ModelAbstract
 {
+    /**
+     * ModelAbstract constructor.
+     * @param array $params
+     */
     public function __construct($params = array())
     {
         if (!empty($params)) {
@@ -11,7 +23,11 @@ abstract class ModelAbstract
         }
     }
 
-    public function setData($params)
+    /**
+     * Set class data using setters methods
+     * @param array $params
+     */
+    public function setData(array $params)
     {
         foreach ($params as $name => $value) {
             $method = 'set' . ucfirst($name);
@@ -23,14 +39,24 @@ abstract class ModelAbstract
         }
     }
 
-    protected abstract function getDomMap();
+    /**
+     * Return array structure od DOM document
+     * @return array
+     */
+    protected abstract function _getDomMap();
 
+    /**
+     * Convert object into DOMElement based on _getDomMap method
+     *
+     * @return \DOMElement
+     * @throws \Exception
+     */
     public function toDomElement()
     {
-        $map = $this->getDomMap();
+        $map = $this->_getDomMap();
 
         if (count($map) != 1) {
-            throw new \Exception('getDomMap must return single element array!');
+            throw new \Exception('_getDomMap must return single element array!');
         }
 
         $dom = new \DOMDocument();
@@ -70,6 +96,10 @@ abstract class ModelAbstract
         return $root;
     }
 
+    /**
+     * Convert object info XML string
+     * @return string xml
+     */
     public function toXml()
     {
         $xml = new \DOMDocument();
@@ -78,14 +108,22 @@ abstract class ModelAbstract
         return $xml->saveXML();
     }
 
+    /**
+     * Set object parameters by xml string
+     * @param $xml string
+     * @return $this
+     */
     public function fromXml($xml)
     {
         if (is_string($xml)) {
             $xml = new \SimpleXMLElement($xml);
         }
 
-        $map = $this->getDomMap();
+        $map = $this->_getDomMap();
         $map = reset($map);
+
+        //cast xml to array
+        $xml = json_decode(json_encode((array) $xml), 1);
 
         foreach ($xml as $property => $value) {
 

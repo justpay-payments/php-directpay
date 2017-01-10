@@ -2,39 +2,69 @@
 
 namespace DigitalVirgo\DirectPay\Service;
 
-use DigitalVirgo\DirectPay\Model\Request\OrderNewRequest;
-use DigitalVirgo\DirectPay\Model\Request\RequestAbstract;
-use DigitalVirgo\DirectPay\Model\Response\OrderNewResponse;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Stream\Stream;
+use DigitalVirgo\DirectPay\Model\Request;
+use DigitalVirgo\DirectPay\Model\Response;
 
-
+/**
+ * Class Client
+ * @package DigitalVirgo\DirectPay\Service
+ *
+ * @author Adam Jurek <adam.jurek@digitalvirgo.pl>
+ *
+ * Rest service for DirectPay orders for partners/
+ */
 class Client extends GuzzleClient
 {
+    /**
+     * @var Client
+     */
     private static $_instance = null;
 
+    /**
+     * @var string
+     */
     protected $_login;
+
+    /**
+     * @var string
+     */
     protected $_password;
+
+    /**
+     * @var string
+     */
     protected $_partnerToken;
 
-    public static function getInstance($baseUrl)
+    /**
+     * Get new instance of client
+     *
+     * @param string $baseUrl api base url
+     * @return Client
+     */
+    public static function getInstance($baseUrl = null)
     {
         if (null === static::$_instance) {
+            if ($baseUrl === null) {
+                throw new \Exception('baseUrl required.');
+            }
+
             static::$_instance = new static(array(
                 'base_url' => $baseUrl,
-//                'defaults' => array(
-//                    'headers' => array(
-//                        'Content-type' => 'application/x-www-form-urlencoded'
-//                    )
-//                )
             ));
 
-//            static::$_instance->setDefaultOption('verify', false);
         }
 
         return static::$_instance;
     }
 
+    /**
+     * Set authorization data
+     *
+     * @param string $loginOrToken login or authorization token
+     * @param string $password password
+     */
     public function setAuth($loginOrToken, $password = null)
     {
         if ($password !== null) {
@@ -47,7 +77,7 @@ class Client extends GuzzleClient
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getLogin()
     {
@@ -55,7 +85,7 @@ class Client extends GuzzleClient
     }
 
     /**
-     * @param mixed $login
+     * @param string $login
      * @return Client
      */
     public function setLogin($login)
@@ -65,7 +95,7 @@ class Client extends GuzzleClient
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getPassword()
     {
@@ -73,7 +103,7 @@ class Client extends GuzzleClient
     }
 
     /**
-     * @param mixed $password
+     * @param string $password
      * @return Client
      */
     public function setPassword($password)
@@ -83,7 +113,7 @@ class Client extends GuzzleClient
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getPartnerToken()
     {
@@ -91,7 +121,7 @@ class Client extends GuzzleClient
     }
 
     /**
-     * @param mixed $partnerToken
+     * @param string $partnerToken
      * @return Client
      */
     public function setPartnerToken($partnerToken)
@@ -100,9 +130,13 @@ class Client extends GuzzleClient
         return $this;
     }
 
-
-
-    protected function _request($url, RequestAbstract $request)
+    /**
+     * @param $url string url
+     * @param Request\RequestAbstract $request request object
+     * @return string xml response
+     * @throws \Exception
+     */
+    protected function _request($url, Request\RequestAbstract $request)
     {
         $this->_injectAuth($request);
 
@@ -118,21 +152,18 @@ class Client extends GuzzleClient
         $body = $response->getBody();
 
         if ($response->getStatusCode() == 200) {
-
             return (string)$body;
-            /*
-            $responseXml = simplexml_load_string($body);
-            if ((string)$responseXml->responseStatus == '200') {
-                return (string)$responseXml->messageID;
-            } else {
-                throw new \Exception('Unable to send message: ['.$response->getStatusCode().'] '.$body->getContents());
-            } */
         } else {
             throw new \Exception('Unable to send request: ['.$response->getStatusCode().'] '.$body->getContents());
         }
     }
 
-    protected function _injectAuth(RequestAbstract $request)
+    /**
+     * Inject authorization parameters
+     *
+     * @param Request\RequestAbstract $request request object
+     */
+    protected function _injectAuth(Request\RequestAbstract $request)
     {
         if ($this->getLogin() && $this->getPassword()) {
             $request
@@ -143,35 +174,69 @@ class Client extends GuzzleClient
         }
     }
 
+    /**
+     * Creating new request
+     *
+     * @param $request Request\OrderNewRequest|array
+     * @return Response\OrderNewResponse response
+     * @throws \Exception
+     */
     public function orderNewRequest($request)
     {
         if (is_array($request)) {
-            $request = new OrderNewRequest($request);
-        } else if (!$request instanceof OrderNewRequest) {
-            throw new \Exception("Parameter must an array or instance of OrderNewRequest");
+            $request = new Request\OrderNewRequest($request);
+        } else if (!$request instanceof Request\OrderNewRequest) {
+            throw new \Exception("Parameter must an array or instance of DigitalVirgo\\DirectPay\\Model\\Request\\OrderNewRequest");
         }
 
         $response = $this->_request('/directpayPartner/OrderNew', $request);
 
-        $responseObj = new OrderNewResponse();
+        $responseObj = new Response\OrderNewResponse();
         return $responseObj->fromXml($response);
     }
 
+    /**
+     * Get payment points info
+     *
+     * @param $request Request\PaymentPointInfoRequest|array
+     * @return Response\PaymentPointInfoResponse response
+     * @throws \Exception
+     */
     public function paymentPointInfo($request)
     {
-//        <PaymentPointInfoRequest>
-//            <Login>directpay_test</Login>
-//            <Password>directpay_test</Password>
-//            <Product>
-//                <Name>product name</Name>
-//                <Price>
-//                    <Net>1,00</Net>
-//                    <Gross>1,23</Gross>
-//                    <Tax>0,23</Tax>
-//                    <TaxRate>23</TaxRate>
-//                    <Currency>PLN</Currency>
-//                </Price>
-//            </Product>
-//        </PaymentPointInfoRequest>
+
+        if (is_array($request)) {
+            $request = new Request\PaymentPointInfoRequest($request);
+        } else if (!$request instanceof Request\PaymentPointInfoRequest) {
+            throw new \Exception("Parameter must an array or instance of DigitalVirgo\\DirectPay\\Model\\Request\\PaymentPointInfoRequest");
+        }
+
+        $response = $this->_request('/directpayPartner/PaymentPointInfo', $request);
+
+        $responseObj = new Response\PaymentPointInfoResponse();
+        return $responseObj->fromXml($response);
     }
+
+    /**
+     * Get order by orderid or partner order id
+     *
+     * @param $request Request\OrderGetRequest|array
+     * @return Response\OrderGetResponse response
+     * @throws \Exception
+     */
+    public function orderGetRequest($request)
+    {
+
+        if (is_array($request)) {
+            $request = new Request\OrderGetRequest($request);
+        } else if (!$request instanceof Request\OrderGetRequest) {
+            throw new \Exception("Parameter must an array or instance of DigitalVirgo\\DirectPay\\Model\\Request\\OrderGetRequest");
+        }
+
+        $response = $this->_request('/directpayPartner/OrderGet', $request);
+
+        $responseObj = new Response\OrderGetResponse();
+        return $responseObj->fromXml($response);
+    }
+
 }

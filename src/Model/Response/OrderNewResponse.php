@@ -2,6 +2,13 @@
 
 namespace DigitalVirgo\DirectPay\Model\Response;
 
+/**
+ * Class OrderNewResponse
+ * @package DigitalVirgo\DirectPay\Model\Response
+ *
+ * @author Adam Jurek <adam.jurek@digitalvirgo.pl>
+ *
+ */
 class OrderNewResponse extends ResponseAbstract
 {
 
@@ -189,9 +196,12 @@ class OrderNewResponse extends ResponseAbstract
         return $this;
     }
 
-    protected function getDomMap()
+    /**
+     * @return array xml DOM map
+     */
+    protected function _getDomMap()
     {
-        $parentMap = parent::getDomMap()[0];
+        $parentMap = parent::_getDomMap()[0];
 
         return [
             'OrderNewResponse' => array_merge($parentMap, [

@@ -3,11 +3,18 @@
 
 namespace DigitalVirgo\DirectPay\Model;
 
+/**
+ * Class PaymentPoints
+ * @package DigitalVirgo\DirectPay\Model
+ *
+ * @author Adam Jurek <adam.jurek@digitalvirgo.pl>
+ *
+ */
 class PaymentPoints extends ModelAbstract
 {
 
     /**
-     * @var PaymentPoint
+     * @var array[PaymentPoint]
      */
     protected $_paymentPoint;
 
@@ -25,25 +32,27 @@ class PaymentPoints extends ModelAbstract
      */
     public function setPaymentPoint($paymentPoint)
     {
-        if (is_array($paymentPoint)) {
-            $paymentPoint = new PaymentPoint($paymentPoint);
+        if (!is_array($paymentPoint) || array_key_exists('PaymentPointId', $paymentPoint)) {
+            $paymentPoint = [$paymentPoint];
         }
+
+        $paymentPoint = array_map(function ($e) {
+            return new PaymentPoint($e);
+        }, $paymentPoint);
 
         $this->_paymentPoint = $paymentPoint;
         return $this;
     }
 
-    protected function getDomMap()
+    /**
+     * @return array xml DOM map
+     */
+    protected function _getDomMap()
     {
         return [
             'PaymentPoints' => [
                 'PaymentPoint' => 'paymentPoint'
             ]
         ];
-    }
-
-
-    public function toDomElement() {
-     // TODO: Implement toDomElement() method.
     }
 }

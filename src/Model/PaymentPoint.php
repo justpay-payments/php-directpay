@@ -2,6 +2,15 @@
 
 namespace DigitalVirgo\DirectPay\Model;
 
+use DigitalVirgo\DirectPay\Model\Enum\PaymentType;
+
+/**
+ * Class PaymentPoint
+ * @package DigitalVirgo\DirectPay\Model
+ *
+ * @author Adam Jurek <adam.jurek@digitalvirgo.pl>
+ *
+ */
 class PaymentPoint extends ModelAbstract
 {
 
@@ -108,12 +117,15 @@ class PaymentPoint extends ModelAbstract
     }
 
     /**
-     * @param string $paymentType
-     * @return PaymentPoint
+     * @param $paymentType
+     * @return $this
+     * @throws \Exception
      */
     public function setPaymentType($paymentType)
     {
-        //@todo validate input
+        if ($paymentType !== null && !in_array($paymentType, PaymentType::getAllOptions())) {
+            throw new \Exception('Invalid payment type.');
+        }
 
         $this->_paymentType = $paymentType;
         return $this;
@@ -195,7 +207,10 @@ class PaymentPoint extends ModelAbstract
         return $this;
     }
 
-    protected function getDomMap()
+    /**
+     * @return array xml DOM map
+     */
+    protected function _getDomMap()
     {
         return [
             'PaymentPoint' => [

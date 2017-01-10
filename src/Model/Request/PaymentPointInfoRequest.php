@@ -4,6 +4,13 @@ namespace DigitalVirgo\DirectPay\Model\Request;
 
 use DigitalVirgo\DirectPay\Model\Product;
 
+/**
+ * Class PaymentPointInfoRequest
+ * @package DigitalVirgo\DirectPay\Model\Request
+ *
+ * @author Adam Jurek <adam.jurek@digitalvirgo.pl>
+ *
+ */
 class PaymentPointInfoRequest extends RequestAbstract
 {
 
@@ -36,6 +43,10 @@ class PaymentPointInfoRequest extends RequestAbstract
      */
     public function setProduct($product)
     {
+        if (is_array($product)) {
+            $product = new Product($product);
+        }
+
         $this->_product = $product;
         return $this;
     }
@@ -76,9 +87,12 @@ class PaymentPointInfoRequest extends RequestAbstract
         return $this;
     }
 
-    protected function getDomMap()
+    /**
+     * @return array xml DOM map
+     */
+    protected function _getDomMap()
     {
-        $parentMap = parent::getDomMap()[0];
+        $parentMap = parent::_getDomMap()[0];
 
         return [
             'PaymentPointInfoRequest' => array_merge($parentMap, [

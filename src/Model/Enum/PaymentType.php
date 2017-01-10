@@ -2,6 +2,13 @@
 
 namespace DigitalVirgo\DirectPay\Model\Enum;
 
+/**
+ * Class PaymentType
+ * @package DigitalVirgo\DirectPay\Model\Enum
+ *
+ * @author Adam Jurek <adam.jurek@digitalvirgo.pl>
+ *
+ */
 class PaymentType
 {
     const SMS                     = "SMS";
@@ -23,4 +30,32 @@ class PaymentType
     const RWD                     = "RWD";
     const SMS_INSTANT_DB          = "SMS_INSTANT_DB";
 
+    /**
+     * Get all payment type options
+     *
+     * @return array paymentType options
+     */
+    public static function getAllOptions()
+    {
+        return [
+            self::SMS,
+            self::MULTISMS,
+            self::BANK_TRANSFER,
+            self::CREDIT_CARD,
+            self::DEBIT,
+            self::DIRECT_BILLING,
+            self::USSD,
+            self::SKY_CASH,
+            self::SKY_CASH_CREDIT_CARD,
+            self::P24_PAYMENT,
+            self::P24_CREDIT_CARD,
+            self::P24_BANK_TRANSFER,
+            self::MOVILE_ON_DEMAND,
+            self::SUBSCRIPTION,
+            self::SMS_MT_WITH_CUSTOM_CODE,
+            self::UNKNOWN,
+            self::RWD,
+            self::SMS_INSTANT_DB,
+        ];
+    }
 }

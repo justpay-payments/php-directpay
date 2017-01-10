@@ -2,6 +2,13 @@
 
 namespace DigitalVirgo\DirectPay\Model;
 
+/**
+ * Class Product
+ * @package DigitalVirgo\DirectPay\Model
+ *
+ * @author Adam Jurek <adam.jurek@digitalvirgo.pl>
+ *
+ */
 class Product extends ModelAbstract
 {
 
@@ -74,7 +81,6 @@ class Product extends ModelAbstract
      */
     public function setPaymentPoints($paymentPoints)
     {
-
         if (is_array($paymentPoints)) {
             $paymentPoints = new PaymentPoints($paymentPoints);
         }
@@ -83,7 +89,10 @@ class Product extends ModelAbstract
         return $this;
     }
 
-    protected function getDomMap()
+    /**
+     * @return array xml DOM map
+     */
+    protected function _getDomMap()
     {
         return [
             'Product' => [

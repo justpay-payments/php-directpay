@@ -2,10 +2,15 @@
 
 namespace DigitalVirgo\DirectPay\Model;
 
+/**
+ * Class Price
+ * @package DigitalVirgo\DirectPay\Model
+ *
+ * @author Adam Jurek <adam.jurek@digitalvirgo.pl>
+ *
+ */
 class Price extends ModelAbstract
 {
-    //@todo autogenerate prices on gross/net provided
-
     /**
      * @var string
      */
@@ -121,7 +126,10 @@ class Price extends ModelAbstract
         return $this;
     }
 
-    protected function getDomMap()
+    /**
+     * @return array xml DOM map
+     */
+    protected function _getDomMap()
     {
         return [
             'Price' => [

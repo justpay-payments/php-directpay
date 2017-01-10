@@ -4,6 +4,13 @@ namespace DigitalVirgo\DirectPay\Model\Response;
 
 use DigitalVirgo\DirectPay\Model\ModelAbstract;
 
+/**
+ * Class ResponseAbstract
+ * @package DigitalVirgo\DirectPay\Model\Response
+ *
+ * @author Adam Jurek <adam.jurek@digitalvirgo.pl>
+ *
+ */
 abstract class ResponseAbstract extends ModelAbstract
 {
 
@@ -53,7 +60,10 @@ abstract class ResponseAbstract extends ModelAbstract
         return $this;
     }
 
-    protected function getDomMap()
+    /**
+     * @return array xml DOM map
+     */
+    protected function _getDomMap()
     {
         return [
             [
