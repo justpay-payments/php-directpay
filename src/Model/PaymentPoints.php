@@ -33,7 +33,17 @@ class PaymentPoints extends ModelAbstract
         return $this;
     }
 
+    protected function getDomMap()
+    {
+        return [
+            'PaymentPoints' => [
+                'PaymentPoint' => 'paymentPoint'
+            ]
+        ];
+    }
 
 
-
+    public function toDomElement() {
+     // TODO: Implement toDomElement() method.
+    }
 }

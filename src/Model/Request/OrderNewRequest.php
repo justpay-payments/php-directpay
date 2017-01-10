@@ -34,5 +34,14 @@ class OrderNewRequest extends RequestAbstract
         return $this;
     }
 
+    protected function getDomMap()
+    {
+        $parentMap = parent::getDomMap()[0];
 
+        return [
+            'OrderNewRequest' => array_merge($parentMap, [
+                'Order' => 'order'
+            ]),
+        ];
+    }
 }

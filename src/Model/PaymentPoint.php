@@ -195,4 +195,21 @@ class PaymentPoint extends ModelAbstract
         return $this;
     }
 
+    protected function getDomMap()
+    {
+        return [
+            'PaymentPoint' => [
+                'PaymentPointId' => 'paymentPointId',
+                'Description'    => 'description',
+                'Provider'       => 'provider',
+                'PaymentType'    => 'paymentType',
+                'Price'          => 'price',
+                'LargeAccount'   => 'largeAccount',
+                'Prefix'         => 'prefix',
+                'CustomPrice'    => 'customPrice',
+            ]
+        ];
+    }
+
+
 }

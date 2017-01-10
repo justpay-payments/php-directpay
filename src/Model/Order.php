@@ -28,7 +28,7 @@ class Order extends ModelAbstract
     /**
      * @var \DateTime
      */
-    protected $_orderCreateData;
+    protected $_orderCreateDate;
 
     /**
      * @var string
@@ -58,12 +58,12 @@ class Order extends ModelAbstract
     /**
      * @var string
      */
-    protected $_transationId;
+    protected $_transactionId;
 
     /**
      * @var string
      */
-    protected $_partnerTransationId;
+    protected $_partnerTransactionId;
 
     /**
      * @var string
@@ -93,7 +93,7 @@ class Order extends ModelAbstract
     /**
      * @var string
      */
-    protected $_orderTokenStatus;
+    protected $_orangeTokenStatus;
 
     /**
      * @var boolean
@@ -177,23 +177,23 @@ class Order extends ModelAbstract
     /**
      * @return \DateTime
      */
-    public function getOrderCreateData()
+    public function getOrderCreateDate()
     {
 
-        return $this->_orderCreateData;
+        return $this->_orderCreateDate;
     }
 
     /**
-     * @param \DateTime $orderCreateData
+     * @param \DateTime $orderCreateDate
      * @return Order
      */
-    public function setOrderCreateData($orderCreateData)
+    public function setOrderCreateDate($orderCreateDate)
     {
-        if (is_string($orderCreateData)) {
-            $orderCreateData = new \DateTime($orderCreateData);
+        if (is_string($orderCreateDate)) {
+            $orderCreateDate = new \DateTime($orderCreateDate);
         }
 
-        $this->_orderCreateData = $orderCreateData;
+        $this->_orderCreateDate = $orderCreateDate;
         return $this;
     }
 
@@ -294,38 +294,21 @@ class Order extends ModelAbstract
     /**
      * @return string
      */
-    public function getTransationId()
+    public function getPartnerTransactionId()
     {
-        return $this->_transationId;
+        return $this->_partnerTransactionId;
     }
 
     /**
-     * @param string $transationId
+     * @param string $partnerTransactionId
      * @return Order
      */
-    public function setTransationId($transationId)
+    public function setPartnerTransactionId($partnerTransactionId)
     {
-        $this->_transationId = $transationId;
+        $this->_partnerTransactionId = $partnerTransactionId;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPartnerTransationId()
-    {
-        return $this->_partnerTransationId;
-    }
-
-    /**
-     * @param string $partnerTransationId
-     * @return Order
-     */
-    public function setPartnerTransationId($partnerTransationId)
-    {
-        $this->_partnerTransationId = $partnerTransationId;
-        return $this;
-    }
 
     /**
      * @return string
@@ -360,6 +343,24 @@ class Order extends ModelAbstract
     public function setGcmRegistrationId($gcmRegistrationId)
     {
         $this->_gcmRegistrationId = $gcmRegistrationId;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTransactionId()
+    {
+        return $this->_transactionId;
+    }
+
+    /**
+     * @param string $transactionId
+     * @return Order
+     */
+    public function setTransactionId($transactionId)
+    {
+        $this->_transactionId = $transactionId;
         return $this;
     }
 
@@ -418,27 +419,9 @@ class Order extends ModelAbstract
     }
 
     /**
-     * @return string
-     */
-    public function getOrderTokenStatus()
-    {
-        return $this->_orderTokenStatus;
-    }
-
-    /**
-     * @param string $orderTokenStatus
-     * @return Order
-     */
-    public function setOrderTokenStatus($orderTokenStatus)
-    {
-        $this->_orderTokenStatus = $orderTokenStatus;
-        return $this;
-    }
-
-    /**
      * @return boolean
      */
-    public function isRedirectOnTop()
+    public function getRedirectOnTop()
     {
         return $this->_redirectOnTop;
     }
@@ -451,6 +434,51 @@ class Order extends ModelAbstract
     {
         $this->_redirectOnTop = $redirectOnTop;
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrangeTokenStatus()
+    {
+        return $this->_orangeTokenStatus;
+    }
+
+    /**
+     * @param string $orangeTokenStatus
+     * @return Order
+     */
+    public function setOrangeTokenStatus($orangeTokenStatus)
+    {
+        $this->_orangeTokenStatus = $orangeTokenStatus;
+        return $this;
+    }
+
+    protected function getDomMap()
+    {
+        return [
+            'Order' => [
+                'OrderId'                   => 'orderId',
+                'OrderStatus'               => 'orderStatus',
+                'PaymentPointId'            => 'paymentPointId',
+                'AuthorizationChannel'      => 'authorizationChannel',
+                'OrderCreateDate'           => 'orderCreateDate', // ? date time
+                'OrderDescription'          => 'orderDescription',
+                'Product'                   => 'product',
+                'NotifyUrl'                 => 'notifyUrl',
+                'OrderFailureUrl'           => 'orderFailureUrl',
+                'OrderCompleteUrl'          => 'orderCompleteUrl',
+                'TransactionId'             => 'transactionId',
+                'PartnerTransactionId'      => 'partnerTransactionId',
+                'Msisdn'                    => 'msisdn',
+                'GcmRegistrationId'         => 'gcmRegistrationId',
+                'CauseStatus'               => 'causeStatus',
+                'SmsCode'                   => 'smsCode',
+                'OrderRejectedErrorMessage' => 'orderRejectedErrorMessage',
+                'orangeTokenStatus'         => 'orangeTokenStatus',
+                'redirectOnTop'             => 'redirectOnTop'     //? boolean
+            ]
+        ];
     }
 
 }

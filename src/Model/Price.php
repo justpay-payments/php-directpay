@@ -121,5 +121,18 @@ class Price extends ModelAbstract
         return $this;
     }
 
+    protected function getDomMap()
+    {
+        return [
+            'Price' => [
+                'Net'      => 'net',
+                'Gross'    => 'gross',
+                'Tax'      => 'tax',
+                'TaxRate'  => 'taxRate',
+                'Currency' => 'currency'
+            ]
+        ];
+    }
+
 
 }

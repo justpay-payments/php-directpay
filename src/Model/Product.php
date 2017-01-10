@@ -83,5 +83,16 @@ class Product extends ModelAbstract
         return $this;
     }
 
+    protected function getDomMap()
+    {
+        return [
+            'Product' => [
+                'Name'          => 'name',
+                'Price'         => 'price',
+                'PaymentPoints' => 'paymentPoints',
+            ]
+        ];
+    }
+
 
 }
