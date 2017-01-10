@@ -179,6 +179,7 @@ class Order extends ModelAbstract
      */
     public function getOrderCreateData()
     {
+
         return $this->_orderCreateData;
     }
 
@@ -188,6 +189,10 @@ class Order extends ModelAbstract
      */
     public function setOrderCreateData($orderCreateData)
     {
+        if (is_string($orderCreateData)) {
+            $orderCreateData = new \DateTime($orderCreateData);
+        }
+
         $this->_orderCreateData = $orderCreateData;
         return $this;
     }
@@ -224,6 +229,10 @@ class Order extends ModelAbstract
      */
     public function setProduct($product)
     {
+        if (is_array($product)) {
+            $product = new Product($product);
+        }
+
         $this->_product = $product;
         return $this;
     }

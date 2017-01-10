@@ -25,6 +25,10 @@ class PaymentPoints extends ModelAbstract
      */
     public function setPaymentPoint($paymentPoint)
     {
+        if (is_array($paymentPoint)) {
+            $paymentPoint = new PaymentPoint($paymentPoint);
+        }
+
         $this->_paymentPoint = $paymentPoint;
         return $this;
     }

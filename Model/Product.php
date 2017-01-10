@@ -52,6 +52,10 @@ class Product extends ModelAbstract
      */
     public function setPrice($price)
     {
+        if (is_array($price)) {
+            $price = new Price($price);
+        }
+
         $this->_price = $price;
         return $this;
     }
@@ -70,6 +74,11 @@ class Product extends ModelAbstract
      */
     public function setPaymentPoints($paymentPoints)
     {
+
+        if (is_array($paymentPoints)) {
+            $paymentPoints = new PaymentPoints($paymentPoints);
+        }
+
         $this->_paymentPoints = $paymentPoints;
         return $this;
     }

@@ -133,6 +133,10 @@ class PaymentPoint extends ModelAbstract
      */
     public function setPrice($price)
     {
+        if (is_array($price)) {
+            $price = new Price($price);
+        }
+
         $this->_price = $price;
         return $this;
     }

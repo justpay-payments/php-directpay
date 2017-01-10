@@ -2,6 +2,7 @@
 
 namespace DigitalVirgo\DirectPay\Service;
 
+use DigitalVirgo\DirectPay\Model\Request\OrderNewRequest;
 use GuzzleHttp\Client as GuzzleClient;
 
 class Client extends GuzzleClient
@@ -28,6 +29,11 @@ class Client extends GuzzleClient
 
     public function orderNewRequest($data)
     {
+        if (is_array($data)) {
+            $data = new OrderNewRequest($data);
+        }
 
+
+        var_dump($data);
     }
 }

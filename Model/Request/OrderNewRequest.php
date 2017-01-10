@@ -26,6 +26,10 @@ class OrderNewRequest extends RequestAbstract
      */
     public function setOrder($order)
     {
+        if (is_array($order)) {
+            $order = new Order($order);
+        }
+
         $this->_order = $order;
         return $this;
     }
