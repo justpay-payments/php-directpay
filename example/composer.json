@@ -1,0 +1,19 @@
+{
+  "name": "root/directpay-example",
+  "type": "project",
+  "authors": [
+    {
+      "name": "Adam Jurek",
+      "email": "adam.jurek@digitalvirgo.pl"
+    }
+  ],
+  "require": {
+    "digitalvirgo/directpay": "dev-master"
+  },
+  "repositories": {
+    "php-mps": {
+      "type": "vcs",
+      "url": "ssh://git@git.services.avantis.pl:7999/phplibs/directpay.git"
+    }
+  }
+}
