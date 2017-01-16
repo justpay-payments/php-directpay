@@ -7,7 +7,7 @@ This library provides integration access to DirectPay Api.
 ### Composer 
 Using cli
 ```
-composer install digitalvirgo/directpay
+composer require digitalvirgo/directpay
 ```      
 
 or manualy update composer.json
