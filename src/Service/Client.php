@@ -239,4 +239,23 @@ class Client extends GuzzleClient
         return $responseObj->fromXml($response);
     }
 
+    /**
+     * Parse incoming data from payment notify callback.
+
+     * @return Response\OrderNotifyResponse response
+     * @throws \Exception
+     */
+    public function notifyParseRequest() {
+        $postData = file_get_contents("php://input");
+        $requestObj = new Request\OrderNotifyRequest();
+        return $requestObj->fromXml($postData);
+    }
+
+    /**
+     * Send OK response for payment notify callback and exit.
+     */
+    public function notifySendOkAndExit() {
+        $responseObj = new Response\OrderNotifyResponse();
+        die($responseObj->toXML());
+    }
 }
