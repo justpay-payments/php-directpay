@@ -145,7 +145,10 @@ class Client extends GuzzleClient
         $stream = Stream::factory($xml);
 
         $response = $this->post($url, array(
-            'body' => $stream
+            'body' => $stream,
+            'headers' => array(
+                'Content-Type' => 'application/xml'
+            )
         ));
 
         /** @var \GuzzleHttp\Stream\Stream $body */
