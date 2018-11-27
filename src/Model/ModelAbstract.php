@@ -87,7 +87,7 @@ abstract class ModelAbstract
 
                 //should be simple element
                 } else {
-                    $field = $dom->createElement($name, $element);
+                    $field = $dom->createElement($name, htmlspecialchars($element));
                     $root->appendChild($field);
                 }
             }
