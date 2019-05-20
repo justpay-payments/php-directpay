@@ -52,6 +52,11 @@ class Order extends ModelAbstract
     /**
      * @var string
      */
+    protected $_adapterLayoutId;
+
+    /**
+     * @var string
+     */
     protected $_notifyUrl;
 
     /**
@@ -246,6 +251,24 @@ class Order extends ModelAbstract
         }
 
         $this->_product = $product;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAdapterLayoutId()
+    {
+        return $this->_adapterLayoutId;
+    }
+
+    /**
+     * @param string $adapterLayoutId
+     * @return Order
+     */
+    public function setAdapterLayoutId($adapterLayoutId)
+    {
+        $this->_adapterLayoutId = $adapterLayoutId;
         return $this;
     }
 
@@ -480,6 +503,7 @@ class Order extends ModelAbstract
                 'OrderCreateDate'           => 'orderCreateDate', // ? date time
                 'OrderDescription'          => 'orderDescription',
                 'Product'                   => 'product',
+                'AdapterLayoutId'           => 'adapterLayoutId',
                 'NotifyUrl'                 => 'notifyUrl',
                 'OrderFailureUrl'           => 'orderFailureUrl',
                 'OrderCompleteUrl'          => 'orderCompleteUrl',
