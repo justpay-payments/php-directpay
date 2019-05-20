@@ -192,7 +192,7 @@ class Client extends GuzzleClient
             throw new \Exception("Parameter must an array or instance of DigitalVirgo\\DirectPay\\Model\\Request\\OrderNewRequest");
         }
 
-        $response = $this->_request('/directpayPartner/OrderNew', $request);
+        $response = $this->_request('directpayPartner/OrderNew', $request);
 
         $responseObj = new Response\OrderNewResponse();
         return $responseObj->fromXml($response);
@@ -214,7 +214,7 @@ class Client extends GuzzleClient
             throw new \Exception("Parameter must an array or instance of DigitalVirgo\\DirectPay\\Model\\Request\\PaymentPointInfoRequest");
         }
 
-        $response = $this->_request('/directpayPartner/PaymentPointInfo', $request);
+        $response = $this->_request('directpayPartner/PaymentPointInfo', $request);
 
         $responseObj = new Response\PaymentPointInfoResponse();
         return $responseObj->fromXml($response);
@@ -236,7 +236,7 @@ class Client extends GuzzleClient
             throw new \Exception("Parameter must an array or instance of DigitalVirgo\\DirectPay\\Model\\Request\\OrderGetRequest");
         }
 
-        $response = $this->_request('/directpayPartner/OrderGet', $request);
+        $response = $this->_request('directpayPartner/OrderGet', $request);
 
         $responseObj = new Response\OrderGetResponse();
         return $responseObj->fromXml($response);
