@@ -16,7 +16,7 @@ or manualy update composer.json
 ...
     "require": {
         ...
-        "digitalvirgo/directpay":"0.1.0"
+        "digitalvirgo/directpay":"^0.1.5"
     }
 }
 ```

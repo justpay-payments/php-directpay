@@ -72,6 +72,11 @@ class Order extends ModelAbstract
     /**
      * @var string
      */
+    protected $_afiliantUrl;
+
+    /**
+     * @var string
+     */
     protected $_transactionId;
 
     /**
@@ -329,6 +334,22 @@ class Order extends ModelAbstract
     /**
      * @return string
      */
+    public function getAfiliantUrl()
+    {
+        return $this->_afiliantUrl;
+    }
+
+    /**
+     * @param string $afiliantUrl
+     */
+    public function setAfiliantUrl($afiliantUrl)
+    {
+        $this->_afiliantUrl = $afiliantUrl;
+    }
+
+    /**
+     * @return string
+     */
     public function getPartnerTransactionId()
     {
         return $this->_partnerTransactionId;
@@ -507,6 +528,7 @@ class Order extends ModelAbstract
                 'NotifyUrl'                 => 'notifyUrl',
                 'OrderFailureUrl'           => 'orderFailureUrl',
                 'OrderCompleteUrl'          => 'orderCompleteUrl',
+                'AfiliantUrl'               => 'afiliantUrl',
                 'TransactionId'             => 'transactionId',
                 'PartnerTransactionId'      => 'partnerTransactionId',
                 'Msisdn'                    => 'msisdn',
