@@ -4,10 +4,9 @@ namespace DigitalVirgo\DirectPay\Model;
 
 /**
  * Class Product
- * @package DigitalVirgo\DirectPay\Model
  *
  * @author Adam Jurek <adam.jurek@digitalvirgo.pl>
- *
+ * @author Paweł Chuchmała <pawel.chuchmala@digitalvirgo.pl>
  */
 class Product extends ModelAbstract
 {
@@ -15,33 +14,34 @@ class Product extends ModelAbstract
     /**
      * @var string
      */
-    protected $_name;
+    protected $name;
 
     /**
      * @var Price
      */
-    protected $_price;
+    protected $price;
 
     /**
      * @var PaymentPoints
      */
-    protected $_paymentPoints;
+    protected $paymentPoints;
 
     /**
      * @return string
      */
     public function getName()
     {
-        return $this->_name;
+        return $this->name;
     }
 
     /**
      * @param string $name
+     *
      * @return Product
      */
     public function setName($name)
     {
-        $this->_name = $name;
+        $this->name = $name;
         return $this;
     }
 
@@ -50,11 +50,12 @@ class Product extends ModelAbstract
      */
     public function getPrice()
     {
-        return $this->_price;
+        return $this->price;
     }
 
     /**
-     * @param Price $price
+     * @param Price|array $price
+     *
      * @return Product
      */
     public function setPrice($price)
@@ -63,7 +64,7 @@ class Product extends ModelAbstract
             $price = new Price($price);
         }
 
-        $this->_price = $price;
+        $this->price = $price;
         return $this;
     }
 
@@ -72,11 +73,12 @@ class Product extends ModelAbstract
      */
     public function getPaymentPoints()
     {
-        return $this->_paymentPoints;
+        return $this->paymentPoints;
     }
 
     /**
-     * @param PaymentPoints $paymentPoints
+     * @param PaymentPoints|array $paymentPoints
+     *
      * @return Product
      */
     public function setPaymentPoints($paymentPoints)
@@ -85,14 +87,14 @@ class Product extends ModelAbstract
             $paymentPoints = new PaymentPoints($paymentPoints);
         }
 
-        $this->_paymentPoints = $paymentPoints;
+        $this->paymentPoints = $paymentPoints;
         return $this;
     }
 
     /**
      * @return array xml DOM map
      */
-    protected function _getDomMap()
+    protected static function getDomMap()
     {
         return [
             'Product' => [
@@ -103,5 +105,13 @@ class Product extends ModelAbstract
         ];
     }
 
-
+    /**
+     * @inheritDoc
+     */
+    protected function getRequiredFields()
+    {
+        return [
+            'name',
+        ];
+    }
 }

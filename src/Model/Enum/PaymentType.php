@@ -4,10 +4,9 @@ namespace DigitalVirgo\DirectPay\Model\Enum;
 
 /**
  * Class PaymentType
- * @package DigitalVirgo\DirectPay\Model\Enum
  *
  * @author Adam Jurek <adam.jurek@digitalvirgo.pl>
- *
+ * @author Paweł Chuchmała <pawel.chuchmala@digitalvirgo.pl>
  */
 class PaymentType
 {

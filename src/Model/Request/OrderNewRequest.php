@@ -6,29 +6,38 @@ use DigitalVirgo\DirectPay\Model\Order;
 
 /**
  * Class OrderNewRequest
- * @package DigitalVirgo\DirectPay\Model\Request
  *
  * @author Adam Jurek <adam.jurek@digitalvirgo.pl>
- *
+ * @author Paweł Chuchmała <pawel.chuchmala@digitalvirgo.pl>
  */
 class OrderNewRequest extends RequestAbstract
 {
+    /**
+     * @var string
+     */
+    protected $clientUID;
+
+    /**
+     * @var string
+     */
+    protected $customerToken;
 
     /**
      * @var Order
      */
-    protected $_order;
+    protected $order;
 
     /**
      * @return Order
      */
     public function getOrder()
     {
-        return $this->_order;
+        return $this->order;
     }
 
     /**
-     * @param Order $order
+     * @param Order|array $order
+     *
      * @return OrderNewRequest
      */
     public function setOrder($order)
@@ -37,21 +46,68 @@ class OrderNewRequest extends RequestAbstract
             $order = new Order($order);
         }
 
-        $this->_order = $order;
+        $this->order = $order;
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClientUID()
+    {
+        return $this->clientUID;
+    }
+
+    /**
+     * @param string $clientUID
+     */
+    public function setClientUID($clientUID)
+    {
+        $this->clientUID = $clientUID;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerToken()
+    {
+        return $this->customerToken;
+    }
+
+    /**
+     * @param string $customerToken
+     */
+    public function setCustomerToken($customerToken)
+    {
+        $this->customerToken = $customerToken;
     }
 
     /**
      * @return array xml DOM map
      */
-    protected function _getDomMap()
+    protected static function getDomMap()
     {
-        $parentMap = parent::_getDomMap()[0];
+        $parentMap = parent::getDomMap()[0];
 
         return [
-            'OrderNewRequest' => array_merge($parentMap, [
-                'Order' => 'order'
-            ]),
+            'OrderNewRequest' => array_merge(
+                $parentMap,
+                [
+                    'ClientUID' => 'clientUID',
+                    'CustomerToken' => 'customerToken',
+                    'Order' => 'order'
+                ]
+            ),
+        ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getRequiredFields()
+    {
+        return [
+            'order',
         ];
     }
 }

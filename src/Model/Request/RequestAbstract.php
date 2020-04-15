@@ -6,46 +6,50 @@ use DigitalVirgo\DirectPay\Model\ModelAbstract;
 
 /**
  * Class RequestAbstract
- * @package DigitalVirgo\DirectPay\Model\Request
  *
  * @author Adam Jurek <adam.jurek@digitalvirgo.pl>
- *
+ * @author Paweł Chuchmała <pawel.chuchmala@digitalvirgo.pl>
  */
 abstract class RequestAbstract extends ModelAbstract
 {
+
     /**
      * Contain authorization login
+     *
      * @var string
      */
-    protected $_login;
+    protected $login;
 
     /**
      * Contain authorization password
+     *
      * @var string
      */
-    protected $_password;
+    protected $password;
 
     /**
      * Contain authorization token
+     *
      * @var string
      */
-    protected $_partnerToken;
+    protected $partnerToken;
 
     /**
      * @return string
      */
     public function getLogin()
     {
-        return $this->_login;
+        return $this->login;
     }
 
     /**
      * @param string $login
+     *
      * @return RequestAbstract
      */
     public function setLogin($login)
     {
-        $this->_login = $login;
+        $this->login = $login;
         return $this;
     }
 
@@ -54,16 +58,17 @@ abstract class RequestAbstract extends ModelAbstract
      */
     public function getPassword()
     {
-        return $this->_password;
+        return $this->password;
     }
 
     /**
      * @param string $password
+     *
      * @return RequestAbstract
      */
     public function setPassword($password)
     {
-        $this->_password = $password;
+        $this->password = $password;
         return $this;
     }
 
@@ -72,23 +77,24 @@ abstract class RequestAbstract extends ModelAbstract
      */
     public function getPartnerToken()
     {
-        return $this->_partnerToken;
+        return $this->partnerToken;
     }
 
     /**
      * @param string $partnerToken
+     *
      * @return RequestAbstract
      */
     public function setPartnerToken($partnerToken)
     {
-        $this->_partnerToken = $partnerToken;
+        $this->partnerToken = $partnerToken;
         return $this;
     }
 
     /**
      * @return array xml DOM map
      */
-    protected function _getDomMap()
+    protected static function getDomMap()
     {
         return [
             [
@@ -98,6 +104,4 @@ abstract class RequestAbstract extends ModelAbstract
             ]
         ];
     }
-
-
 }

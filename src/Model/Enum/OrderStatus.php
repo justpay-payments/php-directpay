@@ -4,19 +4,18 @@ namespace DigitalVirgo\DirectPay\Model\Enum;
 
 /**
  * Class OrderStatus
- * @package DigitalVirgo\DirectPay\Model\Enum
  *
  * @author Adam Jurek <adam.jurek@digitalvirgo.pl>
- *
+ * @author Paweł Chuchmała <pawel.chuchmala@digitalvirgo.pl>
  */
 class OrderStatus
 {
-    const ORDER_REJECTED = "ORDER_REJECTED";
-    const ORDER_ACCEPTED = "ORDER_ACCEPTED";
-    const ORDER_PENDING  = "ORDER_PENDING";
-    const ORDER_LOCKED   = "ORDER_LOCKED";
-    const ORDER_PAYED    = "ORDER_PAYED";
-    const ORDER_CANCELED = "ORDER_CANCELED";
+    const ORDER_REJECTED = 'ORDER_REJECTED';
+    const ORDER_ACCEPTED = 'ORDER_ACCEPTED';
+    const ORDER_PENDING  = 'ORDER_PENDING';
+    const ORDER_LOCKED   = 'ORDER_LOCKED';
+    const ORDER_PAYED    = 'ORDER_PAYED';
+    const ORDER_CANCELED = 'ORDER_CANCELED';
 
     /**
      * Get all order status options
@@ -34,5 +33,4 @@ class OrderStatus
             self::ORDER_CANCELED,
         ];
     }
-
 }

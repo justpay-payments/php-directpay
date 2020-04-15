@@ -4,53 +4,53 @@ namespace DigitalVirgo\DirectPay\Model;
 
 /**
  * Class Price
- * @package DigitalVirgo\DirectPay\Model
  *
  * @author Adam Jurek <adam.jurek@digitalvirgo.pl>
- *
+ * @author Paweł Chuchmała <pawel.chuchmala@digitalvirgo.pl>
  */
 class Price extends ModelAbstract
 {
     /**
      * @var string
      */
-    protected $_net;
+    protected $net;
 
     /**
      * @var string
      */
-    protected $_gross;
+    protected $gross;
 
     /**
      * @var string
      */
-    protected $_tax;
+    protected $tax;
 
     /**
      * @var string
      */
-    protected $_taxRate;
+    protected $taxRate;
 
     /**
      * @var string
      */
-    protected $_currency;
+    protected $currency;
 
     /**
      * @return string
      */
     public function getNet()
     {
-        return $this->_net;
+        return $this->net;
     }
 
     /**
      * @param string $net
+     *
      * @return Price
      */
     public function setNet($net)
     {
-        $this->_net = $net;
+        $this->net = $net;
         return $this;
     }
 
@@ -59,16 +59,17 @@ class Price extends ModelAbstract
      */
     public function getGross()
     {
-        return $this->_gross;
+        return $this->gross;
     }
 
     /**
      * @param string $gross
+     *
      * @return Price
      */
     public function setGross($gross)
     {
-        $this->_gross = $gross;
+        $this->gross = $gross;
         return $this;
     }
 
@@ -77,16 +78,17 @@ class Price extends ModelAbstract
      */
     public function getTax()
     {
-        return $this->_tax;
+        return $this->tax;
     }
 
     /**
      * @param string $tax
+     *
      * @return Price
      */
     public function setTax($tax)
     {
-        $this->_tax = $tax;
+        $this->tax = $tax;
         return $this;
     }
 
@@ -95,16 +97,17 @@ class Price extends ModelAbstract
      */
     public function getTaxRate()
     {
-        return $this->_taxRate;
+        return $this->taxRate;
     }
 
     /**
      * @param string $taxRate
+     *
      * @return Price
      */
     public function setTaxRate($taxRate)
     {
-        $this->_taxRate = $taxRate;
+        $this->taxRate = $taxRate;
         return $this;
     }
 
@@ -113,23 +116,24 @@ class Price extends ModelAbstract
      */
     public function getCurrency()
     {
-        return $this->_currency;
+        return $this->currency;
     }
 
     /**
      * @param string $currency
+     *
      * @return Price
      */
     public function setCurrency($currency)
     {
-        $this->_currency = $currency;
+        $this->currency = $currency;
         return $this;
     }
 
     /**
      * @return array xml DOM map
      */
-    protected function _getDomMap()
+    protected static function getDomMap()
     {
         return [
             'Price' => [
@@ -142,5 +146,17 @@ class Price extends ModelAbstract
         ];
     }
 
-
+    /**
+     * @inheritDoc
+     */
+    protected function getRequiredFields()
+    {
+        return [
+            'currency',
+            'gross',
+            'net',
+            'tax',
+            'taxRate',
+        ];
+    }
 }

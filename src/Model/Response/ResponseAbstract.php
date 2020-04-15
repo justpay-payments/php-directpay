@@ -2,14 +2,14 @@
 
 namespace DigitalVirgo\DirectPay\Model\Response;
 
+use DigitalVirgo\DirectPay\Model\Enum\ErrorType;
 use DigitalVirgo\DirectPay\Model\ModelAbstract;
 
 /**
  * Class ResponseAbstract
- * @package DigitalVirgo\DirectPay\Model\Response
  *
  * @author Adam Jurek <adam.jurek@digitalvirgo.pl>
- *
+ * @author Paweł Chuchmała <pawel.chuchmala@digitalvirgo.pl>
  */
 abstract class ResponseAbstract extends ModelAbstract
 {
@@ -17,28 +17,39 @@ abstract class ResponseAbstract extends ModelAbstract
     /**
      * @var string enum
      */
-    protected $_error;
+    protected $error;
 
     /**
      * @var string
      */
-    protected $_errorDescription;
+    protected $errorDescription;
+
+
+    public function isError()
+    {
+        return !empty($this->error);
+    }
 
     /**
      * @return string
      */
     public function getError()
     {
-        return $this->_error;
+        return $this->error;
     }
 
     /**
      * @param string $error
+     *
      * @return ResponseAbstract
      */
     public function setError($error)
     {
-        $this->_error = $error;
+        $validTypes = "'".implode("','", ErrorType::getAllOptions())."'";
+        if (!in_array($error, ErrorType::getAllOptions(), true)) {
+            throw new \InvalidArgumentException("Error type '$error' is not valid. Valid types: [$validTypes]");
+        }
+        $this->error = $error;
         return $this;
     }
 
@@ -47,23 +58,24 @@ abstract class ResponseAbstract extends ModelAbstract
      */
     public function getErrorDescription()
     {
-        return $this->_errorDescription;
+        return $this->errorDescription;
     }
 
     /**
      * @param string $errorDescription
+     *
      * @return ResponseAbstract
      */
     public function setErrorDescription($errorDescription)
     {
-        $this->_errorDescription = $errorDescription;
+        $this->errorDescription = $errorDescription;
         return $this;
     }
 
     /**
      * @return array xml DOM map
      */
-    protected function _getDomMap()
+    protected static function getDomMap()
     {
         return [
             [
@@ -73,4 +85,11 @@ abstract class ResponseAbstract extends ModelAbstract
         ];
     }
 
+    /**
+     * @inheritDoc
+     */
+    public  function getRequiredFields()
+    {
+        return [];
+    }
 }

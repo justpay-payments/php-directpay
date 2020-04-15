@@ -6,10 +6,9 @@ use DigitalVirgo\DirectPay\Model\Order;
 
 /**
  * Class OrderGetResponse
- * @package DigitalVirgo\DirectPay\Model\Response
  *
  * @author Adam Jurek <adam.jurek@digitalvirgo.pl>
- *
+ * @author Paweł Chuchmała <pawel.chuchmala@digitalvirgo.pl>
  */
 class OrderGetResponse extends ResponseAbstract
 {
@@ -17,18 +16,19 @@ class OrderGetResponse extends ResponseAbstract
     /**
      * @var Order
      */
-    protected $_order;
+    protected $order;
 
     /**
      * @return Order
      */
     public function getOrder()
     {
-        return $this->_order;
+        return $this->order;
     }
 
     /**
-     * @param Order $order
+     * @param Order|array $order
+     *
      * @return OrderGetResponse
      */
     public function setOrder($order)
@@ -37,21 +37,24 @@ class OrderGetResponse extends ResponseAbstract
             $order = new Order($order);
         }
 
-        $this->_order = $order;
+        $this->order = $order;
         return $this;
     }
 
     /**
      * @return array xml DOM map
      */
-    protected function _getDomMap()
+    protected static function getDomMap()
     {
-        $parentMap = parent::_getDomMap()[0];
+        $parentMap = ResponseAbstract::getDomMap()[0];
 
         return [
-            'OrderGetResponse' => array_merge($parentMap, [
-                'Order' => 'order',
-            ]),
+            'OrderGetResponse' => array_merge(
+                $parentMap,
+                [
+                    'Order' => 'order',
+                ]
+            ),
         ];
     }
 

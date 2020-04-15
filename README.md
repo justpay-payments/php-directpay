@@ -10,15 +10,11 @@ Using cli
 composer require digitalvirgo/directpay
 ```      
 
-or manualy update composer.json
-```javascript
-{
-...
+or manualy add to "require" in composer.json
+```json
     "require": {
-        ...
-        "digitalvirgo/directpay":"^0.1.5"
+        "digitalvirgo/directpay":"^2.0.0"
     }
-}
 ```
 
 ## Getting started
@@ -30,16 +26,35 @@ include "vendor/autoload.php";
 
 ## Usage
 ### 1. Configuration
-Setup client 
+Basic setup for DirectPay version 2:
 ```php
 use DigitalVirgo\DirectPay\Service\Client;
 
-$restApiUrl = 'https://directpay-partner.services.avantis.pl/';
-$login = '...'; // Your login
-$login = '...'; // Your password
+$client = new Client();
+```
+First parameter is DirectPay url. Default is for version 2. These urls are in constants:
+`Client::DP_V1_BASE_URL` and `Client::DP_V2_BASE_URL`
+You can pass options for Guzzle client as second parameter.  
 
-$client = Client::getInstance($restApiUrl);
+```php
+use DigitalVirgo\DirectPay\Service\Client;
+$options = [
+    'timeout' => 10,
+]
+$client = new Client(Client::DP_V2_BASE_URL, $options);
+```
+
+Set your credentials in client:
+```php
 $client->setAuth($login, $password);
+```
+Alternatively you can pass credentials directly on every request:
+```php
+$request = new \DigitalVirgo\DirectPay\Model\Request\PaymentPointInfoRequest([
+    'product' => $product,
+    'login' => $login,
+    'password' => $password, 
+])
 ```
 
 ### 2. Getting Payment Points
@@ -101,4 +116,20 @@ var_dump($orderGetResponse->getOrder()->getOrderStatus());
 
 ```
 
-All steps in [example/index.php](example/index.php)
+### 6. Receiving notifications
+When you set up `notifyUrl` in `orderNewReqest` you will be notified By DirectPay. You culd parse received xml to `OrderNotifyRequest`:
+```php
+$body = file_get_contents('php://input');
+//if you can't receive this notification throw some error.
+// if everything is ok return status 200;
+$orderNotifyRequest = OrderNotifyRequest::fromXml($body);
+$response = new OrderNotifyResponse([
+    'order' => $orderNotifyRequest->getOrder(),
+    'updateDate' => new DateTimeImmutable(),
+]);
+print ($response->toXml());
+```
+
+
+##
+All steps are in [example/index.php](example/index.php) and [example/notify.php](example/notify.php);

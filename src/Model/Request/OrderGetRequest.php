@@ -4,10 +4,9 @@ namespace DigitalVirgo\DirectPay\Model\Request;
 
 /**
  * Class OrderGetRequest
- * @package DigitalVirgo\DirectPay\Model\Request
  *
  * @author Adam Jurek <adam.jurek@digitalvirgo.pl>
- *
+ * @author Paweł Chuchmała <pawel.chuchmala@digitalvirgo.pl>
  */
 class OrderGetRequest extends RequestAbstract
 {
@@ -15,28 +14,29 @@ class OrderGetRequest extends RequestAbstract
     /**
      * @var string
      */
-    protected $_orderId;
+    protected $orderId;
 
     /**
      * @var string
      */
-    protected $_partnerTransactionId;
+    protected $partnerTransactionId;
 
     /**
      * @return string
      */
     public function getOrderId()
     {
-        return $this->_orderId;
+        return $this->orderId;
     }
 
     /**
      * @param string $orderId
+     *
      * @return OrderGetRequest
      */
     public function setOrderId($orderId)
     {
-        $this->_orderId = $orderId;
+        $this->orderId = $orderId;
         return $this;
     }
 
@@ -45,31 +45,43 @@ class OrderGetRequest extends RequestAbstract
      */
     public function getPartnerTransactionId()
     {
-        return $this->_partnerTransactionId;
+        return $this->partnerTransactionId;
     }
 
     /**
      * @param string $partnerTransactionId
+     *
      * @return OrderGetRequest
      */
     public function setPartnerTransactionId($partnerTransactionId)
     {
-        $this->_partnerTransactionId = $partnerTransactionId;
+        $this->partnerTransactionId = $partnerTransactionId;
         return $this;
     }
 
     /**
      * @return array xml DOM map
      */
-    protected function _getDomMap()
+    protected static function getDomMap()
     {
-        $parentMap = parent::_getDomMap()[0];
+        $parentMap = parent::getDomMap()[0];
 
         return [
-            'OrderGetRequest' => array_merge($parentMap, [
-                'OrderId' => 'orderId',
-                'PartnerTransactionId' => 'partnerTransactionId',
-            ]),
+            'OrderGetRequest' => array_merge(
+                $parentMap,
+                [
+                    'OrderId' => 'orderId',
+                    'PartnerTransactionId' => 'partnerTransactionId',
+                ]
+            ),
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getRequiredFields()
+    {
+        return [];
     }
 }

@@ -2,12 +2,14 @@
 
 namespace DigitalVirgo\DirectPay\Model\Response;
 
+use DigitalVirgo\DirectPay\Model\AuthorizationRequirements;
+use DigitalVirgo\DirectPay\Model\P24Parameters;
+
 /**
  * Class OrderNewResponse
- * @package DigitalVirgo\DirectPay\Model\Response
  *
  * @author Adam Jurek <adam.jurek@digitalvirgo.pl>
- *
+ * @author Paweł Chuchmała <pawel.chuchmala@digitalvirgo.pl>
  */
 class OrderNewResponse extends ResponseAbstract
 {
@@ -15,58 +17,59 @@ class OrderNewResponse extends ResponseAbstract
     /**
      * @var string
      */
-    protected $_orderId;
+    protected $orderId;
 
     /**
      * @var string
      */
-    protected $_customerRedirectUrl;
+    protected $customerRedirectUrl;
 
     /**
      * @var string enum
      */
-    protected $_orderStatus;
+    protected $orderStatus;
 
     /**
      * @var string
      */
-    protected $_orderErrorDescription;
+    protected $orderErrorDescription;
 
     /**
      * @var string
      */
-    protected $_paymentPointId;
+    protected $paymentPointId;
 
     /**
      * @var P24Parameters
      */
-    protected $_p24Parameters;
+    protected $p24Parameters;
 
     /**
      * @var AuthorizationRequirements
      */
-    protected $_authorizationRequirements;
+    protected $authorizationRequirements;
 
     /**
      * @var string
      */
-    protected $_transactionId;
+    protected $transactionId;
 
     /**
      * @return string
      */
     public function getOrderId()
     {
-        return $this->_orderId;
+        return $this->orderId;
     }
 
     /**
      * @param string $orderId
+     *
      * @return OrderNewResponse
      */
     public function setOrderId($orderId)
     {
-        $this->_orderId = $orderId;
+        $this->orderId = $orderId;
         return $this;
     }
 
@@ -75,16 +78,17 @@ class OrderNewResponse extends ResponseAbstract
      */
     public function getCustomerRedirectUrl()
     {
-        return $this->_customerRedirectUrl;
+        return $this->customerRedirectUrl;
     }
 
     /**
      * @param string $customerRedirectUrl
+     *
      * @return OrderNewResponse
      */
     public function setCustomerRedirectUrl($customerRedirectUrl)
     {
-        $this->_customerRedirectUrl = $customerRedirectUrl;
+        $this->customerRedirectUrl = $customerRedirectUrl;
         return $this;
     }
 
@@ -93,16 +97,17 @@ class OrderNewResponse extends ResponseAbstract
      */
     public function getOrderStatus()
     {
-        return $this->_orderStatus;
+        return $this->orderStatus;
     }
 
     /**
      * @param string $orderStatus
+     *
      * @return OrderNewResponse
      */
     public function setOrderStatus($orderStatus)
     {
-        $this->_orderStatus = $orderStatus;
+        $this->orderStatus = $orderStatus;
         return $this;
     }
 
@@ -111,16 +116,17 @@ class OrderNewResponse extends ResponseAbstract
      */
     public function getOrderErrorDescription()
     {
-        return $this->_orderErrorDescription;
+        return $this->orderErrorDescription;
     }
 
     /**
      * @param string $orderErrorDescription
+     *
      * @return OrderNewResponse
      */
     public function setOrderErrorDescription($orderErrorDescription)
     {
-        $this->_orderErrorDescription = $orderErrorDescription;
+        $this->orderErrorDescription = $orderErrorDescription;
         return $this;
     }
 
@@ -129,16 +135,17 @@ class OrderNewResponse extends ResponseAbstract
      */
     public function getPaymentPointId()
     {
-        return $this->_paymentPointId;
+        return $this->paymentPointId;
     }
 
     /**
      * @param string $paymentPointId
+     *
      * @return OrderNewResponse
      */
     public function setPaymentPointId($paymentPointId)
     {
-        $this->_paymentPointId = $paymentPointId;
+        $this->paymentPointId = $paymentPointId;
         return $this;
     }
 
@@ -147,16 +154,21 @@ class OrderNewResponse extends ResponseAbstract
      */
     public function getP24Parameters()
     {
-        return $this->_p24Parameters;
+        return $this->p24Parameters;
     }
 
     /**
-     * @param P24Parameters $p24Parameters
+     * @param P24Parameters|array $p24Parameters
+     *
      * @return OrderNewResponse
      */
     public function setP24Parameters($p24Parameters)
     {
-        $this->_p24Parameters = $p24Parameters;
+        if (is_array($p24Parameters)) {
+            $p24Parameters = new P24Parameters($p24Parameters);
+        }
+
+        $this->p24Parameters = $p24Parameters;
         return $this;
     }
 
@@ -165,16 +177,20 @@ class OrderNewResponse extends ResponseAbstract
      */
     public function getAuthorizationRequirements()
     {
-        return $this->_authorizationRequirements;
+        return $this->authorizationRequirements;
     }
 
     /**
-     * @param AuthorizationRequirements $authorizationRequirements
+     * @param AuthorizationRequirements|array $authorizationRequirements
+     *
      * @return OrderNewResponse
      */
     public function setAuthorizationRequirements($authorizationRequirements)
     {
-        $this->_authorizationRequirements = $authorizationRequirements;
+        if (is_array($authorizationRequirements)) {
+            $authorizationRequirements = new AuthorizationRequirements($authorizationRequirements);
+        }
+        $this->authorizationRequirements = $authorizationRequirements;
         return $this;
     }
 
@@ -183,37 +199,41 @@ class OrderNewResponse extends ResponseAbstract
      */
     public function getTransactionId()
     {
-        return $this->_transactionId;
+        return $this->transactionId;
     }
 
     /**
      * @param string $transactionId
+     *
      * @return OrderNewResponse
      */
     public function setTransactionId($transactionId)
     {
-        $this->_transactionId = $transactionId;
+        $this->transactionId = $transactionId;
         return $this;
     }
 
     /**
      * @return array xml DOM map
      */
-    protected function _getDomMap()
+    protected static function getDomMap()
     {
-        $parentMap = parent::_getDomMap()[0];
+        $parentMap = ResponseAbstract::getDomMap()[0];
 
         return [
-            'OrderNewResponse' => array_merge($parentMap, [
-                'OrderId'                   => 'orderId',
-                'CustomerRedirectUrl'       => 'customerRedirectUrl',
-                'OrderStatus'               => 'orderStatus',
-                'OrderErrorDescription'     => 'orderErrorDescription',
-                'PaymentPointId'            => 'paymentPointId',
-                'P24Parameters'             => 'p24Parameters',             //?
-                'AuthorizationRequirements' => 'authorizationRequirements',    //?
-                'transactionId'             => 'transactionId',
-            ]),
+            'OrderNewResponse' => array_merge(
+                $parentMap,
+                [
+                    'OrderId'                   => 'orderId',
+                    'CustomerRedirectUrl'       => 'customerRedirectUrl',
+                    'OrderStatus'               => 'orderStatus',
+                    'OrderErrorDescription'     => 'orderErrorDescription',
+                    'PaymentPointId'            => 'paymentPointId',
+                    'P24Parameters'             => 'p24Parameters',             //?
+                    'AuthorizationRequirements' => 'authorizationRequirements',    //?
+                    'transactionId'             => 'transactionId',
+                ]
+            ),
         ];
     }
 

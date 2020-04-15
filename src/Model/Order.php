@@ -2,14 +2,16 @@
 
 namespace DigitalVirgo\DirectPay\Model;
 
+use DateTimeImmutable;
 use DigitalVirgo\DirectPay\Model\Enum\OrderStatus;
+use Exception;
+use InvalidArgumentException;
 
 /**
  * Class Order
- * @package DigitalVirgo\DirectPay\Model
  *
  * @author Adam Jurek <adam.jurek@digitalvirgo.pl>
- *
+ * @author Paweł Chuchmała <pawel.chuchmala@digitalvirgo.pl>
  */
 class Order extends ModelAbstract
 {
@@ -17,123 +19,128 @@ class Order extends ModelAbstract
     /**
      * @var string
      */
-    protected $_orderId;
+    protected $orderId;
 
     /**
      * @var string enum
      */
-    protected $_orderStatus;
+    protected $orderStatus;
 
     /**
      * @var string
      */
-    protected $_paymentPointId;
+    protected $paymentPointId;
 
     /**
      * @var string
      */
-    protected $_authorizationChannel;
+    protected $authorizationChannel;
 
     /**
      * @var \DateTime
      */
-    protected $_orderCreateDate;
+    protected $orderCreateDate;
 
     /**
      * @var string
      */
-    protected $_orderDescription;
+    protected $orderDescription;
 
     /**
      * @var Product
      */
-    protected $_product;
+    protected $product;
 
     /**
      * @var string
      */
-    protected $_adapterLayoutId;
+    protected $adapterLayoutId;
 
     /**
      * @var string
      */
-    protected $_notifyUrl;
+    protected $notifyUrl;
 
     /**
      * @var string
      */
-    protected $_orderFailureUrl;
+    protected $orderFailureUrl;
 
     /**
      * @var string
      */
-    protected $_orderCompleteUrl;
+    protected $orderCompleteUrl;
 
     /**
      * @var string
      */
-    protected $_afiliantUrl;
+    protected $afiliantUrl;
 
     /**
      * @var string
      */
-    protected $_transactionId;
+    protected $transactionId;
 
     /**
      * @var string
      */
-    protected $_partnerTransactionId;
+    protected $partnerTransactionId;
 
     /**
      * @var string
      */
-    protected $_msisdn;
+    protected $msisdn;
 
     /**
      * @var string
      */
-    protected $_gcmRegistrationId;
+    protected $gcmRegistrationId;
 
     /**
      * @var int
      */
-    protected $_causeStatus;
+    protected $causeStatus;
 
     /**
      * @var string
      */
-    protected $_smsCode;
+    protected $smsCode;
 
     /**
      * @var string
      */
-    protected $_orderRejectedErrorMessage;
+    protected $operatorCode;
+    /**
+     * @var string
+     */
+    protected $orderRejectedErrorMessage;
 
     /**
      * @var string
      */
-    protected $_orangeTokenStatus;
+    protected $orangeTokenStatus;
 
     /**
      * @var boolean
      */
-    protected $_redirectOnTop;
+    protected $redirectOnTop;
 
     /**
      * @return string
      */
     public function getOrderId()
     {
-        return $this->_orderId;
+        return $this->orderId;
     }
 
     /**
      * @param string $orderId
+     *
      * @return Order
      */
     public function setOrderId($orderId)
     {
-        $this->_orderId = $orderId;
+        $this->orderId = $orderId;
         return $this;
     }
 
@@ -142,21 +149,23 @@ class Order extends ModelAbstract
      */
     public function getOrderStatus()
     {
-        return $this->_orderStatus;
+        return $this->orderStatus;
     }
 
     /**
      * @param $orderStatus
+     *
      * @return $this
-     * @throws \Exception
+     *
+     * @throws Exception
      */
     public function setOrderStatus($orderStatus)
     {
-        if ($orderStatus !== null && !in_array($orderStatus, OrderStatus::getAllOptions())) {
-            throw new \Exception('Invalid order status.');
+        if ($orderStatus !== null && !in_array($orderStatus, OrderStatus::getAllOptions(), true)) {
+            throw new InvalidArgumentException('Invalid order status.');
         }
 
-        $this->_orderStatus = $orderStatus;
+        $this->orderStatus = $orderStatus;
         return $this;
     }
 
@@ -165,16 +174,17 @@ class Order extends ModelAbstract
      */
     public function getPaymentPointId()
     {
-        return $this->_paymentPointId;
+        return $this->paymentPointId;
     }
 
     /**
      * @param string $paymentPointId
+     *
      * @return Order
      */
     public function setPaymentPointId($paymentPointId)
     {
-        $this->_paymentPointId = $paymentPointId;
+        $this->paymentPointId = $paymentPointId;
         return $this;
     }
 
@@ -183,16 +193,17 @@ class Order extends ModelAbstract
      */
     public function getAuthorizationChannel()
     {
-        return $this->_authorizationChannel;
+        return $this->authorizationChannel;
     }
 
     /**
      * @param string $authorizationChannel
+     *
      * @return Order
      */
     public function setAuthorizationChannel($authorizationChannel)
     {
-        $this->_authorizationChannel = $authorizationChannel;
+        $this->authorizationChannel = $authorizationChannel;
         return $this;
     }
 
@@ -202,20 +213,23 @@ class Order extends ModelAbstract
     public function getOrderCreateDate()
     {
 
-        return $this->_orderCreateDate;
+        return $this->orderCreateDate;
     }
 
     /**
-     * @param \DateTime $orderCreateDate
+     * @param DateTimeImmutable|string $orderCreateDate
+     *
      * @return Order
+     *
+     * @throws Exception
      */
     public function setOrderCreateDate($orderCreateDate)
     {
         if (is_string($orderCreateDate)) {
-            $orderCreateDate = new \DateTime($orderCreateDate);
+            $orderCreateDate = new DateTimeImmutable($orderCreateDate);
         }
+        $this->orderCreateDate = $orderCreateDate;
 
-        $this->_orderCreateDate = $orderCreateDate;
         return $this;
     }
 
@@ -224,16 +238,17 @@ class Order extends ModelAbstract
      */
     public function getOrderDescription()
     {
-        return $this->_orderDescription;
+        return $this->orderDescription;
     }
 
     /**
      * @param string $orderDescription
+     *
      * @return Order
      */
     public function setOrderDescription($orderDescription)
     {
-        $this->_orderDescription = $orderDescription;
+        $this->orderDescription = $orderDescription;
         return $this;
     }
 
@@ -242,11 +257,12 @@ class Order extends ModelAbstract
      */
     public function getProduct()
     {
-        return $this->_product;
+        return $this->product;
     }
 
     /**
-     * @param Product $product
+     * @param Product|array $product
+     *
      * @return Order
      */
     public function setProduct($product)
@@ -255,7 +271,7 @@ class Order extends ModelAbstract
             $product = new Product($product);
         }
 
-        $this->_product = $product;
+        $this->product = $product;
         return $this;
     }
 
@@ -264,16 +280,17 @@ class Order extends ModelAbstract
      */
     public function getAdapterLayoutId()
     {
-        return $this->_adapterLayoutId;
+        return $this->adapterLayoutId;
     }
 
     /**
      * @param string $adapterLayoutId
+     *
      * @return Order
      */
     public function setAdapterLayoutId($adapterLayoutId)
     {
-        $this->_adapterLayoutId = $adapterLayoutId;
+        $this->adapterLayoutId = $adapterLayoutId;
         return $this;
     }
 
@@ -282,16 +299,17 @@ class Order extends ModelAbstract
      */
     public function getNotifyUrl()
     {
-        return $this->_notifyUrl;
+        return $this->notifyUrl;
     }
 
     /**
      * @param string $notifyUrl
+     *
      * @return Order
      */
     public function setNotifyUrl($notifyUrl)
     {
-        $this->_notifyUrl = $notifyUrl;
+        $this->notifyUrl = $notifyUrl;
         return $this;
     }
 
@@ -300,16 +318,17 @@ class Order extends ModelAbstract
      */
     public function getOrderFailureUrl()
     {
-        return $this->_orderFailureUrl;
+        return $this->orderFailureUrl;
     }
 
     /**
      * @param string $orderFailureUrl
+     *
      * @return Order
      */
     public function setOrderFailureUrl($orderFailureUrl)
     {
-        $this->_orderFailureUrl = $orderFailureUrl;
+        $this->orderFailureUrl = $orderFailureUrl;
         return $this;
     }
 
@@ -318,16 +337,17 @@ class Order extends ModelAbstract
      */
     public function getOrderCompleteUrl()
     {
-        return $this->_orderCompleteUrl;
+        return $this->orderCompleteUrl;
     }
 
     /**
      * @param string $orderCompleteUrl
+     *
      * @return Order
      */
     public function setOrderCompleteUrl($orderCompleteUrl)
     {
-        $this->_orderCompleteUrl = $orderCompleteUrl;
+        $this->orderCompleteUrl = $orderCompleteUrl;
         return $this;
     }
 
@@ -336,7 +356,7 @@ class Order extends ModelAbstract
      */
     public function getAfiliantUrl()
     {
-        return $this->_afiliantUrl;
+        return $this->afiliantUrl;
     }
 
     /**
@@ -344,7 +364,7 @@ class Order extends ModelAbstract
      */
     public function setAfiliantUrl($afiliantUrl)
     {
-        $this->_afiliantUrl = $afiliantUrl;
+        $this->afiliantUrl = $afiliantUrl;
     }
 
     /**
@@ -352,16 +372,17 @@ class Order extends ModelAbstract
      */
     public function getPartnerTransactionId()
     {
-        return $this->_partnerTransactionId;
+        return $this->partnerTransactionId;
     }
 
     /**
      * @param string $partnerTransactionId
+     *
      * @return Order
      */
     public function setPartnerTransactionId($partnerTransactionId)
     {
-        $this->_partnerTransactionId = $partnerTransactionId;
+        $this->partnerTransactionId = $partnerTransactionId;
         return $this;
     }
 
@@ -371,16 +392,17 @@ class Order extends ModelAbstract
      */
     public function getMsisdn()
     {
-        return $this->_msisdn;
+        return $this->msisdn;
     }
 
     /**
      * @param string $msisdn
+     *
      * @return Order
      */
     public function setMsisdn($msisdn)
     {
-        $this->_msisdn = $msisdn;
+        $this->msisdn = $msisdn;
         return $this;
     }
 
@@ -389,16 +411,17 @@ class Order extends ModelAbstract
      */
     public function getGcmRegistrationId()
     {
-        return $this->_gcmRegistrationId;
+        return $this->gcmRegistrationId;
     }
 
     /**
      * @param string $gcmRegistrationId
+     *
      * @return Order
      */
     public function setGcmRegistrationId($gcmRegistrationId)
     {
-        $this->_gcmRegistrationId = $gcmRegistrationId;
+        $this->gcmRegistrationId = $gcmRegistrationId;
         return $this;
     }
 
@@ -407,16 +430,17 @@ class Order extends ModelAbstract
      */
     public function getTransactionId()
     {
-        return $this->_transactionId;
+        return $this->transactionId;
     }
 
     /**
      * @param string $transactionId
+     *
      * @return Order
      */
     public function setTransactionId($transactionId)
     {
-        $this->_transactionId = $transactionId;
+        $this->transactionId = $transactionId;
         return $this;
     }
 
@@ -425,16 +449,17 @@ class Order extends ModelAbstract
      */
     public function getCauseStatus()
     {
-        return $this->_causeStatus;
+        return $this->causeStatus;
     }
 
     /**
      * @param int $causeStatus
+     *
      * @return Order
      */
     public function setCauseStatus($causeStatus)
     {
-        $this->_causeStatus = $causeStatus;
+        $this->causeStatus = $causeStatus;
         return $this;
     }
 
@@ -443,16 +468,17 @@ class Order extends ModelAbstract
      */
     public function getSmsCode()
     {
-        return $this->_smsCode;
+        return $this->smsCode;
     }
 
     /**
      * @param string $smsCode
+     *
      * @return Order
      */
     public function setSmsCode($smsCode)
     {
-        $this->_smsCode = $smsCode;
+        $this->smsCode = $smsCode;
         return $this;
     }
 
@@ -461,16 +487,17 @@ class Order extends ModelAbstract
      */
     public function getOrderRejectedErrorMessage()
     {
-        return $this->_orderRejectedErrorMessage;
+        return $this->orderRejectedErrorMessage;
     }
 
     /**
      * @param string $orderRejectedErrorMessage
+     *
      * @return Order
      */
     public function setOrderRejectedErrorMessage($orderRejectedErrorMessage)
     {
-        $this->_orderRejectedErrorMessage = $orderRejectedErrorMessage;
+        $this->orderRejectedErrorMessage = $orderRejectedErrorMessage;
         return $this;
     }
 
@@ -479,16 +506,17 @@ class Order extends ModelAbstract
      */
     public function getRedirectOnTop()
     {
-        return $this->_redirectOnTop;
+        return $this->redirectOnTop;
     }
 
     /**
      * @param boolean $redirectOnTop
+     *
      * @return Order
      */
     public function setRedirectOnTop($redirectOnTop)
     {
-        $this->_redirectOnTop = $redirectOnTop;
+        $this->redirectOnTop = $redirectOnTop;
         return $this;
     }
 
@@ -497,23 +525,40 @@ class Order extends ModelAbstract
      */
     public function getOrangeTokenStatus()
     {
-        return $this->_orangeTokenStatus;
+        return $this->orangeTokenStatus;
     }
 
     /**
      * @param string $orangeTokenStatus
+     *
      * @return Order
      */
     public function setOrangeTokenStatus($orangeTokenStatus)
     {
-        $this->_orangeTokenStatus = $orangeTokenStatus;
+        $this->orangeTokenStatus = $orangeTokenStatus;
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOperatorCode()
+    {
+        return $this->operatorCode;
+    }
+
+    /**
+     * @param string $operatorCode
+     */
+    public function setOperatorCode($operatorCode)
+    {
+        $this->operatorCode = $operatorCode;
     }
 
     /**
      * @return array xml DOM map
      */
-    protected function _getDomMap()
+    protected static function getDomMap()
     {
         return [
             'Order' => [
@@ -527,6 +572,7 @@ class Order extends ModelAbstract
                 'AdapterLayoutId'           => 'adapterLayoutId',
                 'NotifyUrl'                 => 'notifyUrl',
                 'OrderFailureUrl'           => 'orderFailureUrl',
+                'OperatorCode'              => 'operatorCode',
                 'OrderCompleteUrl'          => 'orderCompleteUrl',
                 'AfiliantUrl'               => 'afiliantUrl',
                 'TransactionId'             => 'transactionId',
@@ -542,4 +588,15 @@ class Order extends ModelAbstract
         ];
     }
 
+    /**
+     * @inheritDoc
+     */
+    protected function getRequiredFields()
+    {
+        return [
+            'notifyUrl',
+            'paymentPointId',
+            'product',
+        ];
+    }
 }

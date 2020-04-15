@@ -3,13 +3,13 @@
 namespace DigitalVirgo\DirectPay\Model;
 
 use DigitalVirgo\DirectPay\Model\Enum\PaymentType;
+use InvalidArgumentException;
 
 /**
  * Class PaymentPoint
- * @package DigitalVirgo\DirectPay\Model
  *
  * @author Adam Jurek <adam.jurek@digitalvirgo.pl>
- *
+ * @author Paweł Chuchmała <pawel.chuchmala@digitalvirgo.pl>
  */
 class PaymentPoint extends ModelAbstract
 {
@@ -17,58 +17,59 @@ class PaymentPoint extends ModelAbstract
     /**
      * @var string
      */
-    protected $_paymentPointId;
+    protected $paymentPointId;
 
     /**
      * @var string
      */
-    protected $_description;
+    protected $description;
 
     /**
      * @var string
      */
-    protected $_provider;
+    protected $provider;
 
     /**
      * @var string enum
      */
-    protected $_paymentType;
+    protected $paymentType;
 
     /**
      * @var Price
      */
-    protected $_price;
+    protected $price;
 
     /**
      * @var string
      */
-    protected $_largeAccount;
+    protected $largeAccount;
 
     /**
      * @var string
      */
-    protected $_prefix;
+    protected $prefix;
 
     /**
      * @var boolean
      */
-    protected $_customPrice;
+    protected $customPrice;
 
     /**
      * @return string
      */
     public function getPaymentPointId()
     {
-        return $this->_paymentPointId;
+        return $this->paymentPointId;
     }
 
     /**
      * @param string $paymentPointId
+     *
      * @return PaymentPoint
      */
     public function setPaymentPointId($paymentPointId)
     {
-        $this->_paymentPointId = $paymentPointId;
+        $this->paymentPointId = $paymentPointId;
         return $this;
     }
 
@@ -77,16 +78,17 @@ class PaymentPoint extends ModelAbstract
      */
     public function getDescription()
     {
-        return $this->_description;
+        return $this->description;
     }
 
     /**
      * @param string $description
+     *
      * @return PaymentPoint
      */
     public function setDescription($description)
     {
-        $this->_description = $description;
+        $this->description = $description;
         return $this;
     }
 
@@ -95,16 +97,17 @@ class PaymentPoint extends ModelAbstract
      */
     public function getProvider()
     {
-        return $this->_provider;
+        return $this->provider;
     }
 
     /**
      * @param string $provider
+     *
      * @return PaymentPoint
      */
     public function setProvider($provider)
     {
-        $this->_provider = $provider;
+        $this->provider = $provider;
         return $this;
     }
 
@@ -113,21 +116,23 @@ class PaymentPoint extends ModelAbstract
      */
     public function getPaymentType()
     {
-        return $this->_paymentType;
+        return $this->paymentType;
     }
 
     /**
      * @param $paymentType
+     *
      * @return $this
-     * @throws \Exception
+     *
+     * @throws InvalidArgumentException
      */
     public function setPaymentType($paymentType)
     {
-        if ($paymentType !== null && !in_array($paymentType, PaymentType::getAllOptions())) {
-            throw new \Exception('Invalid payment type.');
+        if ($paymentType !== null && !in_array($paymentType, PaymentType::getAllOptions(), true)) {
+            throw new InvalidArgumentException('Invalid payment type.');
         }
 
-        $this->_paymentType = $paymentType;
+        $this->paymentType = $paymentType;
         return $this;
     }
 
@@ -136,11 +141,12 @@ class PaymentPoint extends ModelAbstract
      */
     public function getPrice()
     {
-        return $this->_price;
+        return $this->price;
     }
 
     /**
-     * @param Price $price
+     * @param Price|array $price
+     *
      * @return PaymentPoint
      */
     public function setPrice($price)
@@ -149,7 +155,7 @@ class PaymentPoint extends ModelAbstract
             $price = new Price($price);
         }
 
-        $this->_price = $price;
+        $this->price = $price;
         return $this;
     }
 
@@ -158,16 +164,17 @@ class PaymentPoint extends ModelAbstract
      */
     public function getLargeAccount()
     {
-        return $this->_largeAccount;
+        return $this->largeAccount;
     }
 
     /**
      * @param string $largeAccount
+     *
      * @return PaymentPoint
      */
     public function setLargeAccount($largeAccount)
     {
-        $this->_largeAccount = $largeAccount;
+        $this->largeAccount = $largeAccount;
         return $this;
     }
 
@@ -176,16 +183,17 @@ class PaymentPoint extends ModelAbstract
      */
     public function getPrefix()
     {
-        return $this->_prefix;
+        return $this->prefix;
     }
 
     /**
      * @param string $prefix
+     *
      * @return PaymentPoint
      */
     public function setPrefix($prefix)
     {
-        $this->_prefix = $prefix;
+        $this->prefix = $prefix;
         return $this;
     }
 
@@ -194,23 +202,24 @@ class PaymentPoint extends ModelAbstract
      */
     public function isCustomPrice()
     {
-        return $this->_customPrice;
+        return $this->customPrice;
     }
 
     /**
      * @param boolean $customPrice
+     *
      * @return PaymentPoint
      */
     public function setCustomPrice($customPrice)
     {
-        $this->_customPrice = $customPrice;
+        $this->customPrice = $customPrice;
         return $this;
     }
 
     /**
      * @return array xml DOM map
      */
-    protected function _getDomMap()
+    protected static function getDomMap()
     {
         return [
             'PaymentPoint' => [
@@ -226,5 +235,14 @@ class PaymentPoint extends ModelAbstract
         ];
     }
 
+    /**
+     * @inheritDoc
+     */
+    protected function getRequiredFields()
+    {
+        return [
+            'price',
 
+        ];
+    }
 }

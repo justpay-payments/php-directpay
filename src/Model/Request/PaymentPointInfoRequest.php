@@ -6,10 +6,9 @@ use DigitalVirgo\DirectPay\Model\Product;
 
 /**
  * Class PaymentPointInfoRequest
- * @package DigitalVirgo\DirectPay\Model\Request
  *
  * @author Adam Jurek <adam.jurek@digitalvirgo.pl>
- *
+ * @author Paweł Chuchmała <pawel.chuchmala@digitalvirgo.pl>
  */
 class PaymentPointInfoRequest extends RequestAbstract
 {
@@ -17,28 +16,29 @@ class PaymentPointInfoRequest extends RequestAbstract
     /**
      * @var Product
      */
-    protected $_product;
+    protected $product;
 
     /**
      * @var string
      */
-    protected $_provider;
+    protected $provider;
 
     /**
      * @var string enum1
      */
-    protected $_paymentType;
+    protected $paymentType;
 
     /**
      * @return Product
      */
     public function getProduct()
     {
-        return $this->_product;
+        return $this->product;
     }
 
     /**
-     * @param Product $product
+     * @param Product|array $product
+     *
      * @return PaymentPointInfoRequest
      */
     public function setProduct($product)
@@ -47,7 +47,7 @@ class PaymentPointInfoRequest extends RequestAbstract
             $product = new Product($product);
         }
 
-        $this->_product = $product;
+        $this->product = $product;
         return $this;
     }
 
@@ -56,16 +56,17 @@ class PaymentPointInfoRequest extends RequestAbstract
      */
     public function getProvider()
     {
-        return $this->_provider;
+        return $this->provider;
     }
 
     /**
      * @param string $provider
+     *
      * @return PaymentPointInfoRequest
      */
     public function setProvider($provider)
     {
-        $this->_provider = $provider;
+        $this->provider = $provider;
         return $this;
     }
 
@@ -74,33 +75,47 @@ class PaymentPointInfoRequest extends RequestAbstract
      */
     public function getPaymentType()
     {
-        return $this->_paymentType;
+        return $this->paymentType;
     }
 
     /**
      * @param string $paymentType
+     *
      * @return PaymentPointInfoRequest
      */
     public function setPaymentType($paymentType)
     {
-        $this->_paymentType = $paymentType;
+        $this->paymentType = $paymentType;
         return $this;
     }
 
     /**
      * @return array xml DOM map
      */
-    protected function _getDomMap()
+    protected static function getDomMap()
     {
-        $parentMap = parent::_getDomMap()[0];
+        $parentMap = parent::getDomMap()[0];
 
         return [
-            'PaymentPointInfoRequest' => array_merge($parentMap, [
-                'Product'     => 'product',
-                'Provider'    => 'provider',
-                'PaymentType' => 'paymentType',
-            ]),
+            'PaymentPointInfoRequest' => array_merge(
+                $parentMap,
+                [
+                    'Product'     => 'product',
+                    'Provider'    => 'provider',
+                    'PaymentType' => 'paymentType',
+                ]
+            ),
         ];
     }
 
+    /**
+     * @inheritDoc
+     */
+    protected function getRequiredFields()
+    {
+
+        return [
+            'product'
+        ];
+    }
 }

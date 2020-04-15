@@ -1,33 +1,36 @@
 <?php
 
-
 namespace DigitalVirgo\DirectPay\Model;
+
+use InvalidArgumentException;
 
 /**
  * Class PaymentPoints
- * @package DigitalVirgo\DirectPay\Model
  *
  * @author Adam Jurek <adam.jurek@digitalvirgo.pl>
- *
+ * @author Paweł Chuchmała <pawel.chuchmala@digitalvirgo.pl>
  */
 class PaymentPoints extends ModelAbstract
 {
 
     /**
-     * @var array[PaymentPoint]
+     * @var PaymentPoint[]
      */
-    protected $_paymentPoint;
+    protected $paymentPoint;
 
     /**
-     * @return PaymentPoint
+     * @return PaymentPoint[]
      */
     public function getPaymentPoint()
     {
-        return $this->_paymentPoint;
+        return $this->paymentPoint;
     }
 
     /**
-     * @param PaymentPoint $paymentPoint
+     * @param PaymentPoint[]|PaymentPoint $paymentPoint
+     *
+     * @throws InvalidArgumentException
+     *
      * @return PaymentPoints
      */
     public function setPaymentPoint($paymentPoint)
@@ -36,23 +39,42 @@ class PaymentPoints extends ModelAbstract
             $paymentPoint = [$paymentPoint];
         }
 
-        $paymentPoint = array_map(function ($e) {
-            return new PaymentPoint($e);
-        }, $paymentPoint);
+        $paymentPoint = array_map(
+            static function ($paymentPointData) {
+                if ($paymentPointData instanceof PaymentPoint) {
+                    return $paymentPointData;
+                }
+                if (is_array($paymentPointData)) {
+                    return new PaymentPoint($paymentPointData);
+                }
+                throw new InvalidArgumentException('Invalid PaymentPoint definition. Expected PaymentPoint or array');
+            },
+            $paymentPoint
+        );
 
-        $this->_paymentPoint = $paymentPoint;
+        $this->paymentPoint = $paymentPoint;
         return $this;
     }
 
     /**
      * @return array xml DOM map
      */
-    protected function _getDomMap()
+    protected static function getDomMap()
     {
         return [
             'PaymentPoints' => [
                 'PaymentPoint' => 'paymentPoint'
             ]
+        ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getRequiredFields()
+    {
+        return [
+            'paymentPoint',
         ];
     }
 }
