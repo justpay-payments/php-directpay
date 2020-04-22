@@ -13,7 +13,7 @@ composer require digitalvirgo/directpay
 or manualy add to "require" in composer.json
 ```json
     "require": {
-        "digitalvirgo/directpay":"^2.0.0"
+        "digitalvirgo/directpay":"^1.0.0"
     }
 ```
 
