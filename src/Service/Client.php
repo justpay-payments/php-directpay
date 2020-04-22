@@ -25,7 +25,7 @@ use InvalidArgumentException;
 class Client
 {
     const DP_V1_BASE_URL = 'https://directpay-partner.services.avantis.pl/';
-    const DP_V2_BASE_URL = 'http://justpay.staging.digitalvirgo.pl/direct-pay2-api/';
+    const DP_V2_BASE_URL = 'https://directpay-api.digitalvirgo.pl/direct-pay2-api/directpayPartner/';
     const DP_V2_BASE_URL_STAGE = 'https://direct-pay2.staging.digitalvirgo.pl/direct-pay2-api/';
 
     /**

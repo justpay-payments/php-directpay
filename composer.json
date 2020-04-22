@@ -1,13 +1,17 @@
 {
   "name": "digitalvirgo/directpay",
   "license": "MIT",
-  "version": "0.1.5",
+  "version": "1.0.1",
   "type": "library",
   "description": "Official library for DirectPay",
   "authors": [
     {
       "name": "Adam Jurek",
       "email": "adam.jurek@digitalvirgo.pl"
+    },
+    {
+      "name": "Paweł Chuchmała",
+      "email": "pawel.chuchmala@digitalvirgo.pl"
     }
   ],
   "require": {
